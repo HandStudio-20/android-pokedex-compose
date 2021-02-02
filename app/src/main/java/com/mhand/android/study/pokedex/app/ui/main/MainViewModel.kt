@@ -49,10 +49,6 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun onNavigationClick() {
-        // TODO :: Handling event (Ex. Open Drawer..)
-    }
-
     fun onAppBarActionClick(type: AppBarActionType) {
         // TODO :: Handling Event (Ex. Show Dialog..)
     }
