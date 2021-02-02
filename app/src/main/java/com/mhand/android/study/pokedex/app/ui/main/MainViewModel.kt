@@ -10,7 +10,9 @@ import androidx.lifecycle.viewModelScope
 import com.mhand.android.study.pokedex.model.Pokemon
 import com.mhand.android.study.pokedex.repository.PokemonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,17 +38,13 @@ class MainViewModel @Inject constructor(
             scope.launch {
                 val updatedPokemonList = _pokemonList.value?.toMutableList() ?: mutableListOf()
 
-                pokemonRepository.getAllPokemon(
-                    limit = POKEMON_LIST_DEFAULT_LIMIT,
+                getAllPokemon(
                     offset = updatedPokemonList.lastOrNull()?.id ?: 0
-                ).results.map {
-                    pokemonRepository.getPokemonDetail(it.name)
-                }.let {
+                ).let {
                     updatedPokemonList.addAll(it)
+                    _pokemonList.postValue(updatedPokemonList)
+                    _isLoading.value = false
                 }
-
-                _pokemonList.postValue(updatedPokemonList)
-                _isLoading.value = false
             }
         }
     }
@@ -61,6 +59,15 @@ class MainViewModel @Inject constructor(
 
     fun onPokemonClick(pokemon: Pokemon) {
         // TODO :: Open pokemon detail page
+    }
+
+    private suspend fun getAllPokemon(offset: Int): List<Pokemon> = withContext(Dispatchers.IO) {
+        pokemonRepository.getAllPokemon(
+            limit = POKEMON_LIST_DEFAULT_LIMIT,
+            offset = offset
+        ).results.map {
+            pokemonRepository.getPokemonDetail(it.name)
+        }
     }
 
     companion object {
