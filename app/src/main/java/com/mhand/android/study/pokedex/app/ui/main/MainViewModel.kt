@@ -7,16 +7,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mhand.android.study.pokedex.api.PokemonApi
-import com.mhand.android.study.pokedex.app.ui.main.composable.AppBarActionType
 import com.mhand.android.study.pokedex.model.PokemonDetail
+import com.mhand.android.study.pokedex.repository.PokemonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val pokemonApi: PokemonApi
+    private val pokemonRepository: PokemonRepository
 ) : ViewModel() {
     private val scope = viewModelScope
 
@@ -30,20 +29,23 @@ class MainViewModel @Inject constructor(
         loadPokemonList()
     }
 
-    private fun loadPokemonList() {
+    fun loadPokemonList() {
         if (!_isLoading.value) {
+            _isLoading.value = true
+
             scope.launch {
-                _isLoading.value = true
+                val updatedPokemonList = _pokemonList.value?.toMutableList() ?: mutableListOf()
 
-                val newPokemonList = mutableListOf<PokemonDetail>()
-
-                pokemonApi.getAllPokemon(offset = 0).results.forEach {
-                    val pokemon = pokemonApi.getPokemonDetail(it.name)
-                    newPokemonList.add(pokemon)
+                pokemonRepository.getAllPokemon(
+                    limit = POKEMON_LIST_DEFAULT_LIMIT,
+                    offset = updatedPokemonList.lastOrNull()?.id ?: 0
+                ).results.map {
+                    pokemonRepository.getPokemonDetail(it.name)
+                }.let {
+                    updatedPokemonList.addAll(it)
                 }
 
-                _pokemonList.postValue(newPokemonList)
-
+                _pokemonList.postValue(updatedPokemonList)
                 _isLoading.value = false
             }
         }
@@ -59,5 +61,9 @@ class MainViewModel @Inject constructor(
 
     fun onPokemonClick(pokemonDetail: PokemonDetail) {
         // TODO :: Open pokemon detail page
+    }
+
+    companion object {
+        private const val POKEMON_LIST_DEFAULT_LIMIT = 30
     }
 }

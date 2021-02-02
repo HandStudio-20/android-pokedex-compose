@@ -10,7 +10,7 @@ interface PokemonApi {
 
     @GET("pokemon")
     suspend fun getAllPokemon(
-        @Query("limit") limit: Int = 20,
+        @Query("limit") limit: Int,
         @Query("offset") offset: Int
     ): PokemonResult
 

@@ -6,12 +6,14 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.onActive
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
@@ -30,14 +32,21 @@ import com.mhand.android.study.pokedex.utils.PokemonUtils
 @Composable
 fun PokemonGrid(
     state: State<List<PokemonDetail>?>,
-    onItemClick: (PokemonDetail) -> Unit
+    onItemClick: (PokemonDetail) -> Unit,
+    onReachAtLast: () -> Unit
 ) {
     val pokemonList = state.value ?: emptyList()
 
     LazyVerticalGrid(
         cells = GridCells.Fixed(count = 2)
     ) {
-        items(pokemonList) { pokemon ->
+        itemsIndexed(pokemonList) { index, pokemon ->
+            if (index == pokemonList.lastIndex) {
+                onActive {
+                    onReachAtLast.invoke()
+                }
+            }
+
             PokemonGridCard(
                 pokemonDetail = pokemon,
                 onClick = onItemClick
