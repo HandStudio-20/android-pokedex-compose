@@ -1,6 +1,6 @@
 package com.mhand.android.study.pokedex.api
 
-import com.mhand.android.study.pokedex.model.PokemonDetail
+import com.mhand.android.study.pokedex.model.Pokemon
 import com.mhand.android.study.pokedex.model.PokemonResult
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -17,5 +17,5 @@ interface PokemonApi {
     @GET("pokemon/{name}")
     suspend fun getPokemonDetail(
         @Path("name") name: String
-    ): PokemonDetail
+    ): Pokemon
 }

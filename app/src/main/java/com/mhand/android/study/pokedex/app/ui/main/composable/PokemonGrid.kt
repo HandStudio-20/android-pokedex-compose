@@ -11,7 +11,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.onActive
 import androidx.compose.ui.Modifier
@@ -25,14 +24,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mhand.android.study.pokedex.R
 import com.mhand.android.study.pokedex.app.ui.component.loadPicture
-import com.mhand.android.study.pokedex.model.PokemonDetail
+import com.mhand.android.study.pokedex.model.Pokemon
 import com.mhand.android.study.pokedex.utils.PokemonUtils
 
 @ExperimentalFoundationApi
 @Composable
 fun PokemonGrid(
-    state: State<List<PokemonDetail>?>,
-    onItemClick: (PokemonDetail) -> Unit,
+    state: State<List<Pokemon>?>,
+    onItemClick: (Pokemon) -> Unit,
     onReachAtLast: () -> Unit
 ) {
     val pokemonList = state.value ?: emptyList()
@@ -57,8 +56,8 @@ fun PokemonGrid(
 
 @Composable
 fun PokemonGridCard(
-    pokemonDetail: PokemonDetail,
-    onClick: (PokemonDetail) -> Unit
+    pokemonDetail: Pokemon,
+    onClick: (Pokemon) -> Unit
 ) {
     Box(modifier = Modifier
         .padding(4.dp)
@@ -81,7 +80,7 @@ fun PokemonGridCard(
 }
 
 @Composable
-fun PokemonGridCardContent(pokemonDetail: PokemonDetail) {
+fun PokemonGridCardContent(pokemonDetail: Pokemon) {
     ConstraintLayout(modifier = Modifier.fillMaxSize()) {
         val (pokemonName, pokemonNumber, pokemonImage) = createRefs()
 

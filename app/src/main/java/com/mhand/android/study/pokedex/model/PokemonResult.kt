@@ -7,10 +7,10 @@ data class PokemonResult(
     val count: Int,
 
     @SerializedName("results")
-    val results: List<PokemonResultPair>
+    val results: List<PokemonResultData>
 )
 
-data class PokemonResultPair(
+data class PokemonResultData(
     @SerializedName("name")
     val name: String,
 

@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mhand.android.study.pokedex.model.PokemonDetail
+import com.mhand.android.study.pokedex.model.Pokemon
 import com.mhand.android.study.pokedex.repository.PokemonRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -22,8 +22,8 @@ class MainViewModel @Inject constructor(
     private val _isLoading: MutableState<Boolean> = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
 
-    private val _pokemonList: MutableLiveData<List<PokemonDetail>> = MutableLiveData()
-    val pokemonList: LiveData<List<PokemonDetail>> = _pokemonList
+    private val _pokemonList: MutableLiveData<List<Pokemon>> = MutableLiveData()
+    val pokemonList: LiveData<List<Pokemon>> = _pokemonList
 
     init {
         loadPokemonList()
@@ -59,7 +59,7 @@ class MainViewModel @Inject constructor(
         // TODO :: Handling Event (Ex. Show Dialog..)
     }
 
-    fun onPokemonClick(pokemonDetail: PokemonDetail) {
+    fun onPokemonClick(pokemon: Pokemon) {
         // TODO :: Open pokemon detail page
     }
 

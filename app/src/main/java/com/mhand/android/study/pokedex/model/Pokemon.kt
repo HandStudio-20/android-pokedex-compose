@@ -2,7 +2,7 @@ package com.mhand.android.study.pokedex.model
 
 import com.google.gson.annotations.SerializedName
 
-data class PokemonDetail(
+data class Pokemon(
     @SerializedName("id")
     val id: Int,
 
@@ -10,7 +10,7 @@ data class PokemonDetail(
     val name: String,
 
     @SerializedName("types")
-    val types: List<PokemonTypeInfo>
+    val types: List<PokemonType>
 ) {
     val pokedexNumber: String
         get() = id.toString().padStart(3, '0')
@@ -19,15 +19,15 @@ data class PokemonDetail(
         get() = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokedexNumber}.png"
 }
 
-data class PokemonTypeInfo(
+data class PokemonType(
     @SerializedName("slot")
     val slot: Int,
 
     @SerializedName("type")
-    val type: PokemonType
+    val type: PokemonTypeInfo
 )
 
-data class PokemonType(
+data class PokemonTypeInfo(
     @SerializedName("name")
     val name: String,
 
