@@ -11,7 +11,13 @@ data class PokemonDetail(
 
     @SerializedName("types")
     val types: List<PokemonTypeInfo>
-)
+) {
+    val pokedexNumber: String
+        get() = id.toString().padStart(3, '0')
+
+    val imageResource: String
+        get() = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokedexNumber}.png"
+}
 
 data class PokemonTypeInfo(
     @SerializedName("slot")
@@ -19,7 +25,6 @@ data class PokemonTypeInfo(
 
     @SerializedName("type")
     val type: PokemonType
-
 )
 
 data class PokemonType(

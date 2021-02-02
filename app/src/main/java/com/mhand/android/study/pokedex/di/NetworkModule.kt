@@ -1,5 +1,6 @@
 package com.mhand.android.study.pokedex.di
 
+import com.mhand.android.study.pokedex.api.PokemonApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,5 +32,7 @@ object NetworkModule {
             .client(okHttpClient)
             .build()
 
-
+    @Singleton
+    @Provides
+    fun providePokemonClient(retrofit: Retrofit) = retrofit.create(PokemonApi::class.java)
 }

@@ -1,4 +1,4 @@
-package com.mhand.android.study.pokedex.ui.theme
+package com.mhand.android.study.pokedex.app.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

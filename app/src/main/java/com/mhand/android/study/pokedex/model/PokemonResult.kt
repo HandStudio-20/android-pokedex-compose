@@ -2,7 +2,7 @@ package com.mhand.android.study.pokedex.model
 
 import com.google.gson.annotations.SerializedName
 
-data class Pokemon(
+data class PokemonResult(
     @SerializedName("count")
     val count: Int,
 

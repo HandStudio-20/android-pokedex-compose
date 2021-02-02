@@ -1,4 +1,4 @@
-package com.mhand.android.study.pokedex
+package com.mhand.android.study.pokedex.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

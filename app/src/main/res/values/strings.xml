@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Pokedex</string>
+    <string name="app_name">Compose Pokedex</string>
+
+    <string name="pokemon_number">#%1$s</string>
 </resources>
